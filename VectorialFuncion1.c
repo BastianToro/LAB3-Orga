@@ -68,15 +68,15 @@ int main(int argc, char *argv[])
 __m128 fpow(__m128 base,__m128 exponente){
     __m128 final;
     int i,j;
-    float arregloResultados[4];
-    float arrayBase[4];
-    float arrayExponente[4];
+    float arregloResultados[4];//aqui se guardaran los 4 resultados la funcion elevada
+    float arrayBase[4];// aqui se cargaran los 4 datos del vector "base"
+    float arrayExponente[4];//aqui se caragaran los 4 datos del vector "exponente"
     float exponenteActual,baseActual,aux=0.0;
-    _mm_store_ps (arrayExponente,exponente);
-    _mm_store_ps (arrayBase,base);
+    _mm_store_ps (arrayExponente,exponente);//se pasa el vector al arrayExponente.
+    _mm_store_ps (arrayBase,base);//se  pasa el vector base al arrayBase.
     for(j=0;j<4;j++){
-        exponenteActual = arrayExponente[j];
-        baseActual = arrayBase[j];
+        exponenteActual = arrayExponente[j];//se obtiene el exponente en la posicion j
+        baseActual = arrayBase[j];//se obtiene la base en la  posicion j
         aux = 1.0;
         if(exponenteActual==0 || baseActual==0){//raiz de 0 es 0, pero 0 elevado a 0
             arregloResultados[j]=0;             //no existe-> se decide dejarlo como 0.
@@ -85,9 +85,9 @@ __m128 fpow(__m128 base,__m128 exponente){
             for(i=0;i<exponenteActual;i++){//calculamos la potencia
                 aux = aux * baseActual;
             }
-            arregloResultados[j]=aux;
-        }
+            arregloResultados[j]=aux;//se guarda en array el resultado de la potencia
+        }                           //de la posicion j
     }
-    final = _mm_load_ps(&arregloResultados[0]);
-    return final;
+    final = _mm_load_ps(&arregloResultados[0]);//se guarda en un __m128 el arreglo obtenido
+    return final;                           //con la matematica ya hecha
 }
