@@ -2,6 +2,6 @@ LAB3-Orga
 =========
 Integrantes: 
 Bastián Toro,
-Matáas Gómez
+Matías Gómez
 
 Laboratorio instrucciones SIMD
