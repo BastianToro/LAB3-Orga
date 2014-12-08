@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 					 N = N-1;
 					 int j=0;
 					 //float a[N] __attribute__((aligned(16)));
-					    size_t b[N];
+					    int b[N];
 					    FILE *fichero1;
 					    fichero1 = fopen(nombre,"r");
 					    if (fichero1 == NULL){
