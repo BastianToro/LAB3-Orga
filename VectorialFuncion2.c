@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     				    fclose(fichero);
     				    N = N-1;
 				    int j=0;
-				    size_t b[N];
+				    int b[N];
 					FILE *fichero1;
 					    fichero1 = fopen(nombre,"r");
 					    if (fichero1 == NULL){
