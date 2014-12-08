@@ -3,67 +3,104 @@
 #include <pmmintrin.h>
 #include <math.h>
 #include <stdio.h>
-
-
-#define N 8
+#include <getopt.h>
+#include <string.h>
 
 __m128 fpow(__m128 base,__m128 exponente);
 
 int main(int argc, char *argv[])
 {
-    float a[N] __attribute__((aligned(16)));
+	FILE *fichero;
+	int sgte_opcion;
+	char *nombre;
+	char *tipo = "f:";
+	while(1){
+		sgte_opcion = getopt_long(argc,argv,tipo,NULL,NULL);
+		if(sgte_opcion == -1)break;
+		switch(sgte_opcion){
+			case 'f': 	{nombre = malloc(strlen(optarg));
+					strcpy(nombre,optarg);	
+					fichero = fopen(nombre,"r");
+					int numero,N=0;
+    					if (fichero == NULL){
+						return 0;
+					}
+					else{
+						while(!feof(fichero)){
+						    fscanf(fichero,"%d",&numero);
+						    N = N + 1;
+						}
+					 }
+					 fclose(fichero);
+					 N = N-1;
+					 float a[N] __attribute__((aligned(16)));
 
-    // inicializar el arreglo
-    for(size_t i = 0; i < N; i++){
-        a[i] = i;
-    }
+					    // inicializar el arreglo
+					    for(size_t i = 0; i < N; i++){
+						a[i] = i;
+					    }
 
-    __m128 base;
-    __m128 baseConRaiz;
-    __m128 sumatoria;
-    __m128 resultadofpow;
+					    __m128 base;
+					    __m128 baseConRaiz;
+					    __m128 sumatoria;
+					    __m128 resultadofpow;
 
-    sumatoria[0] = 0.0;
-    sumatoria[1] = 0.0;
-    sumatoria[2] = 0.0;
-    sumatoria[3] = 0.0;
+					    sumatoria[0] = 0.0;
+					    sumatoria[1] = 0.0;
+					    sumatoria[2] = 0.0;
+					    sumatoria[3] = 0.0;
 
-    for(size_t i=0; i<N; i=i+4){
+					    for(size_t i=0; i<N; i=i+4){
 
-        /*se van a ir agarrando de a 4 datos, hasta que ya no se pueda porque
-        quedan menos de 4 datos en el archivo de texto. En ese caso entraremos en
-        el siguiente IF en donde se realizaran las operaciones dato por dato.*/
-        if((N-i)<4){
-            int k;
-            for(k=0;k<(N-i);k++){
-                sumatoria[k] = sumatoria[k] + pow(sqrt(a[i+k]),a[i+k]);
-            }
-        }
-        else{
-            base = _mm_load_ps(&a[i]);
-            baseConRaiz = _mm_sqrt_ps(base);
+						/*se van a ir agarrando de a 4 datos, hasta que ya no se pueda porque
+						quedan menos de 4 datos en el archivo de texto. En ese caso entraremos en
+						el siguiente IF en donde se realizaran las operaciones dato por dato.*/
+						if((N-i)<4){
+						    int k;
+						    for(k=0;k<(N-i);k++){
+							sumatoria[k] = sumatoria[k] + pow(sqrt(a[i+k]),a[i+k]);
+						    }
+						}
+						else{
+						    base = _mm_load_ps(&a[i]);
+						    baseConRaiz = _mm_sqrt_ps(base);
 
-            resultadofpow = fpow(baseConRaiz,base);
+						    resultadofpow = fpow(baseConRaiz,base);
 
-            sumatoria = _mm_add_ps(sumatoria,resultadofpow);
-            
+						    sumatoria = _mm_add_ps(sumatoria,resultadofpow);
+						    
 
-            //se va guardando 
-        }   //de a 4 por cada 'i' de la sumatoria en cada ciclo del for.
-    }       //Al final del ciclo FOR se suman los 4 indices del arreglo y se obtiene
-            //el resultado final.
+						    //se va guardando 
+						}   //de a 4 por cada 'i' de la sumatoria en cada ciclo del for.
+					    }       //Al final del ciclo FOR se suman los 4 indices del arreglo y se obtiene
+						    //el resultado final.
 
-    //guardo en a[], lo que esta en __m128 acc 
-    _mm_store_ps(a,sumatoria);
+					    //guardo en a[], lo que esta en __m128 acc 
+					    _mm_store_ps(a,sumatoria);
 
-    float resultado = 0;
-    int i;
-    for(i=0;i<4;i++){//aqui se suman los 4 indices del arreglo
-        resultado = resultado + sumatoria[i];
-    }
-    printf("resultado = %f\n",resultado);
-    return 0;
+					    float resultado = 0;
+					    int i;
+					    for(i=0;i<4;i++){//aqui se suman los 4 indices del arreglo
+						resultado = resultado + sumatoria[i];
+					    }
+					    printf("resultado = %f\n",resultado);
+					}
+					break;
+
+			case '?': printf("valor no valido\n");
+				break;
+		}
+
+	}
+	free(nombre);
+
+	return 0;
 }
+
+
+
+
+
 
 __m128 fpow(__m128 base,__m128 exponente){
     __m128 final;
