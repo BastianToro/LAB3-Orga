@@ -6,9 +6,8 @@
 #include <getopt.h>
 #include <string.h>
 
-__m128 funcion(__m128 v1, __m128 v2);
 float largoMin(float a, float b);
-
+__m128 funcion(__m128 v1, __m128 v2);
 
 int main(int argc, char *argv[])
 {
@@ -35,16 +34,36 @@ int main(int argc, char *argv[])
 					 }
 					 fclose(fichero);
 					 N = N-1;
-					float a[N];
-				    float b[N];
+					int j=0;
+					 //float a[N] __attribute__((aligned(16)));
+					    size_t t[N];
+					    FILE *fichero1;
+					    fichero1 = fopen(nombre,"r");
+					    if (fichero1 == NULL){
+						return 0;
+					    }
+					    else{
+						while(!feof(fichero1)){
+						    
+						    fscanf(fichero1,"%d",&t[j]);
+						    j++;
+						}
+					    }
+					    int c[N];
+						int k;
+						for(k =0;k<j-1;k++){
+							c[k] = t[k];
+						
+						}
+					    float a[N] __attribute__((aligned(16)));
+						float b[N] __attribute__((aligned(16)));
 
-				    for(size_t i = 0; i < N; i++){
-					a[i] = i + 1;
-				    }
+					    for(size_t i = 0; i < N; i++){
+							a[i] = c[i];
+							b[i] = c[i];
+						}
+						
 
-				    for(size_t i = 0; i < N; i++){
-					b[i] = i + 1;
-				    }
 
 				    /*se toma como n en la sumatoria, el largo menor entre los 2
 				    vectores, ya que si uno es mas largo que el otro habrian
