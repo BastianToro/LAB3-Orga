@@ -33,13 +33,32 @@ int main(int argc, char *argv[])
     				    }
     				    fclose(fichero);
     				    N = N-1;
-    				    float a[N] __attribute__((aligned(16)));
-    
-    				    // inicializar el arreglo
-    				    for(size_t i = 0; i < N; i++){
-    					a[i] = i;
-    				    }
-    
+				    int j=0;
+				    size_t b[N];
+					FILE *fichero1;
+					    fichero1 = fopen(nombre,"r");
+					    if (fichero1 == NULL){
+						return 0;
+					    }
+					    else{
+						while(!feof(fichero1)){
+						    
+						    fscanf(fichero1,"%d",&b[j]);
+						    j++;
+						}
+					    }
+					    int c[N];
+						int k;
+						for(k =0;k<j-1;k++){
+							c[k] = b[k];
+						
+						}
+					    float a[N] __attribute__((aligned(16)));
+			
+					    for(size_t i = 0; i < N; i++){
+							a[i] = c[i];
+						}
+    				
     				    __m128 v1;
     				    __m128 v2;
     				    __m128 sumatoria;
