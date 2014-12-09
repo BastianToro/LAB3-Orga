@@ -50,20 +50,15 @@ int main(int argc,char *argv[]){
 					    int i;
 					    for(i =0;i<j-1;i++){
 						    c[i] = a[i];
-						    printf("valor: %i, de a = %d\n",i,c[i]);
 					    }
 					    int b[largo-1];
 					    int k;
 					    for(k =0;k<j-1;k++){
-						    //if(k ==0)b[k] = 0;
-						    
 						    b[k] = a[k+1];
-						    printf("valor: %d, de b = %d\n",k,b[k]);
-					            
 					    }
 					    float resultado;
 					    resultado = ecuacion(a,b,largo-1);
-					    printf("%f\n",resultado);
+					    printf("Resultado = %f\n",resultado);
 				}
 				break;
 
@@ -83,7 +78,6 @@ float ecuacion(int *a, int *b,int la){
     int i;
     for(i = 0; i < la-1; i++){
         suma = suma + (float)(a[i]*b[i]);
-	printf("suma: %f , valor de a: %d,valor de b: %d\n",suma,a[i],b[i]);
     }
     return suma;
 }
