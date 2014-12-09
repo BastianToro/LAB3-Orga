@@ -1,0 +1,3 @@
+all: usachvirtualVectorial2.c
+	gcc -o salida usachvirtualVectorial2.c -lm -std=c11 -msse -msse2 -msse3
+	./salida -f entrada.in
