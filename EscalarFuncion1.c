@@ -25,7 +25,6 @@ int main(int argc,char *argv[]){
 						while(!feof(fichero)){
 							fscanf(fichero,"%d",&numero);
 							largo = largo+1;
-							//printf("valor: %i, de a = %d\n",largo,numero);
 						}
 					}
 					fclose(fichero);
@@ -36,7 +35,6 @@ int main(int argc,char *argv[]){
 						while(!feof(fichero2)){
 							fscanf(fichero2,"%d",&a[j]);
 							j++;
-							//printf("valor: %i, de a = %d\n",j,a[j]);
 						}
 					}
 					fclose(fichero2);
@@ -48,7 +46,6 @@ int main(int argc,char *argv[]){
 					float resultado;
         				resultado = ecuacion(b,largo-1);
         				printf("%f\n",resultado);
-					//printf("%s\n",nombre);
 				}
 				break;
 
@@ -69,7 +66,6 @@ float ecuacion(int *a,int largo){
 	for(i = 0; i < largo; i++){
         	base = a[i];
         	suma = suma + pow(sqrt(base),base);
-        	printf("base: %f, suma %f asdasdas\n",base,suma);
     	}
     	return suma;
 }
